@@ -53,7 +53,6 @@ class UserController extends Controller
 
     public function updateProfilePicture(Request $request)
     {
-        return asset('storage/profile-images/profile-3-butterful.PNG');
         $requestData = $request->all();
         $validator = Validator::make($requestData, ['profile_picture' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048']);
 
@@ -67,6 +66,7 @@ class UserController extends Controller
         $fileName = "profile-" . $userId . "-" . $file->getClientOriginalName();
         Helper::uploadFile($file, $fileName);
         User::updateProfileImage($userId, $fileName);
+        return $this->responseSuccess();
     }
 
 }

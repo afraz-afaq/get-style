@@ -1,0 +1,169 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Get Style APIs",
+        "description": "Get Style APIs",
+        "contact": {
+            "email": "dev@get-style.com"
+        },
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "https://dev.get-style.com/api/",
+            "description": "local"
+        }
+    ],
+    "paths": {
+        "/register": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Register Customer|Shop|Freelancer",
+                "operationId": "register",
+                "requestBody": {
+                    "description": "Register a new user.",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "full_name": {
+                                        "description": "fullname of the user.",
+                                        "type": "string",
+                                        "example": "Asad Shareef"
+                                    },
+                                    "email": {
+                                        "description": "email of the user.",
+                                        "type": "string",
+                                        "example": "asad@gmail.com"
+                                    },
+                                    "phone": {
+                                        "description": "Phone of the user.",
+                                        "type": "string",
+                                        "example": "923482269069"
+                                    },
+                                    "account_type": {
+                                        "description": "Type of user.",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "password": {
+                                        "description": "Password of the user.",
+                                        "type": "string",
+                                        "example": "IamAsecretHero"
+                                    },
+                                    "password_confirmation": {
+                                        "description": "Confirmed password of the user.",
+                                        "type": "string",
+                                        "example": "IamAsecretHero"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login User",
+                "operationId": "login",
+                "requestBody": {
+                    "description": "Login User to the system.",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "description": "user login email address provided on signup to Nonsulin",
+                                        "type": "string",
+                                        "example": "asad@gmail.com"
+                                    },
+                                    "password": {
+                                        "description": "user secure password.",
+                                        "type": "string",
+                                        "example": "IamAsecretHero"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/user/profile-picture": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Store profile pic for logged in User.",
+                "operationId": "updateProfilePicture",
+                "requestBody": {
+                    "description": "Store profile pic for logged in User.",
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "profile_picture": {
+                                        "description": "select profile picture for logged in User.",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "binary"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "user_access_token": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "user_access_token": {
+                "type": "apiKey",
+                "description": "user access token",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}

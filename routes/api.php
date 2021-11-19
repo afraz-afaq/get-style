@@ -27,4 +27,6 @@ Route::group(['middleware' => ['auth:sanctum']], function ()
         Route::post('/profile-picture',[UserController::class,'updateProfilePicture']);
     });
 
+    Route::post('logout', [AuthController::class, 'logout']);
+
 });

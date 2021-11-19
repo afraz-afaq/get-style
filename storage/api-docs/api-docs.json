@@ -110,6 +110,28 @@
                 }
             }
         },
+        "/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Logout User",
+                "operationId": "logout",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "user_access_token": []
+                    }
+                ]
+            }
+        },
         "/user/profile-picture": {
             "post": {
                 "tags": [

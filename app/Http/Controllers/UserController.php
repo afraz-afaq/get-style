@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Helper;
 use App\Models\User;
 use App\Traits\ResponseHandler;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -53,20 +54,27 @@ class UserController extends Controller
 
     public function updateProfilePicture(Request $request)
     {
-        $requestData = $request->all();
-        $validator = Validator::make($requestData, ['profile_picture' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048']);
-
-        if ($validator->fails())
+        try
         {
-            return $this->responseErrorValidation($validator->errors());
-        }
+            $requestData = $request->all();
+            $validator = Validator::make($requestData, ['profile_picture' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048']);
 
-        $userId = auth()->id();
-        $file = $request->file('profile_picture');
-        $fileName = "profile-" . $userId . "-" . $file->getClientOriginalName();
-        Helper::uploadFile($file, $fileName);
-        User::updateProfileImage($userId, $fileName);
-        return $this->responseSuccess();
+            if ($validator->fails())
+            {
+                return $this->responseErrorValidation($validator->errors());
+            }
+
+            $userId = auth()->id();
+            $file = $request->file('profile_picture');
+            $fileName = "profile-" . $userId . "-" . $file->getClientOriginalName();
+            Helper::uploadFile($file, $fileName);
+            User::updateProfileImage($userId, $fileName);
+            return $this->responseSuccess([asset("storage/profile-images/$fileName")]);
+        }
+        catch (Exception $e)
+        {
+            return $this->serverError($e);
+        }
     }
 
 }

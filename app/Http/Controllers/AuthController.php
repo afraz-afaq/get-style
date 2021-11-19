@@ -160,4 +160,32 @@ class AuthController extends Controller
         }
 
     }
+
+
+    /**
+     * @OA\Post(
+     *
+     *     path="/logout",
+     *     tags={"Auth"},
+     *     summary="Logout User",
+     *     operationId="logout",
+     *
+     *     @OA\Response(
+     *          response=200,
+     *          description="Success",
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *          ),
+     *      ),
+     *
+     *     security={
+     *          {"user_access_token": {}}
+     *     }
+     * )
+     */
+    public function logout()
+    {
+        auth()->user()->tokens()->delete();
+        return $this->responseSuccess(['Logout successfully!']);
+    }
 }

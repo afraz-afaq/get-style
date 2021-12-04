@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Constant;
 use App\Helpers\Helper;
+use App\Models\Patient;
 use App\Models\User;
 use App\Traits\ResponseHandler;
 use Exception;
@@ -72,6 +74,82 @@ class UserController extends Controller
             return $this->responseSuccess([asset("storage/profile-images/$fileName")]);
         }
         catch (Exception $e)
+        {
+            return $this->serverError($e);
+        }
+    }
+
+
+    /**
+     * @OA\Post(
+     *
+     *     path="/profile/update",
+     *     tags={"User"},
+     *     summary="Edit patient profile data",
+     *     operationId="editProfile",
+     *
+     *     @OA\RequestBody(
+     *         description="Edit patient profile data.",
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="full_name",
+     *                     description="name",
+     *                     type="string",
+     *                     example="Full name"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="email",
+     *                     description="user email",
+     *                     type="string",
+     *                     example="abc@gg.com"
+     *                 ),
+     *              )
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *          response=200,
+     *          description="Success",
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *          ),
+     *      ),
+     *
+     *     security={
+     *          {"user_access_token": {}}
+     *     }
+     * )
+     */
+
+    public function editProfile(Request $request)
+    {
+        try
+        {
+            $user = auth()->user();
+            switch ($user->account_type)
+            {
+                case Constant::ROLES['CUSTOMER']:
+                    $requestData = $request->all();
+
+                    $validator = Validator::make($requestData, [
+                        'full_name' => 'required|string',
+                        'email'     => 'required|string|unique:users,email,' . $user->id . ',id,deleted_at,NULL',
+                    ]);
+
+                    if ($validator->fails())
+                    {
+                        return $this->responseErrorValidation($validator->errors());
+                    }
+
+                    User::updateUser($requestData, ['id' => $user->id]);
+                    break;
+            }
+            return $this->responseSuccess();
+        }
+        catch (\Exception $e)
         {
             return $this->serverError($e);
         }

@@ -24,7 +24,7 @@ class CreateShopProfilesTable extends Migration
             $table->text('lat');
             $table->text('lng');
             $table->integer('total_reviews')->nullable();
-            $table->decimal('avg_rating', 2, 1);
+            $table->decimal('avg_rating', 2, 1)->nullable();
             $table->tinyInteger('is_available')->default(\App\Helpers\Constant::TRUE);
             $table->softDeletes();
             $table->timestamps();

@@ -20,7 +20,7 @@ class CreateShopStylistsTable extends Migration
             $table->unsignedBigInteger('stylist_id');
             $table->integer('experience')->default(0);
             $table->integer('total_reviews')->nullable();
-            $table->decimal('avg_rating', 2, 1);
+            $table->decimal('avg_rating', 2, 1)->nullable();
             $table->tinyInteger('is_available')->default(\App\Helpers\Constant::TRUE);
             $table->softDeletes();
             $table->timestamps();

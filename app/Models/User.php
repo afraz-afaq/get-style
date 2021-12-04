@@ -52,16 +52,21 @@ class User extends Authenticatable
     public static function getValidationRules($type, $params = [])
     {
         $rules = [
-            'register' => [
+            'register'       => [
                 'full_name'    => 'required|string',
                 'email'        => ['required', 'email', Rule::unique('users')->whereNull('deleted_at')],
                 'password'     => 'required|string|confirmed',
                 'phone'        => 'string',
                 'account_type' => 'integer|required',
             ],
-            'login'    => [
+            'login'          => [
                 'email'    => 'required|string',
                 'password' => 'required|string',
+            ],
+            'changePassword' => [
+                'old_password'          => 'required',
+                'password'              => 'required|min:6|confirmed',
+                'password_confirmation' => 'required|min:6',
             ],
         ];
 
@@ -88,5 +93,16 @@ class User extends Authenticatable
         $user = self::find($userId)->get()->first();
         $user->profile_image = $fileName;
         $user->save();
+    }
+
+    public static function updateUser($attributes, $conditions)
+    {
+        return self::where($conditions)
+            ->update($attributes);
+    }
+
+    public function shopProfile()
+    {
+        return $this->hasOne(ShopProfile::class, 'shop_id', 'id');
     }
 }

@@ -20,7 +20,7 @@
                 "tags": [
                     "User"
                 ],
-                "summary": "Register Customer|Shop|Freelancer",
+                "summary": "Register Customer|Shop|Stylist",
                 "operationId": "register",
                 "requestBody": {
                     "description": "Register a new user.",
@@ -90,12 +90,12 @@
                                     "email": {
                                         "description": "user login email address provided on signup to Nonsulin",
                                         "type": "string",
-                                        "example": "asad@gmail.com"
+                                        "example": "asad@getstyle.com"
                                     },
                                     "password": {
                                         "description": "user secure password.",
                                         "type": "string",
-                                        "example": "IamAsecretHero"
+                                        "example": "123456"
                                     }
                                 },
                                 "type": "object"
@@ -132,6 +132,158 @@
                 ]
             }
         },
+        "/user/change-password": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Change password",
+                "operationId": "changePassword",
+                "requestBody": {
+                    "description": "Change Password.",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "old_password": {
+                                        "description": "user old password.",
+                                        "type": "string",
+                                        "example": "Test123!"
+                                    },
+                                    "password": {
+                                        "description": "user new password.",
+                                        "type": "string",
+                                        "example": "Test123!"
+                                    },
+                                    "password_confirmation": {
+                                        "description": "user new password confirmation.",
+                                        "type": "string",
+                                        "example": "Test123!"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "user_access_token": []
+                    }
+                ]
+            }
+        },
+        "/metadata": {
+            "get": {
+                "tags": [
+                    "Meta Configuration"
+                ],
+                "summary": "Get App Metadata",
+                "operationId": "getWebAppMetaData",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/stylist/top-rated": {
+            "get": {
+                "tags": [
+                    "Stylist"
+                ],
+                "summary": "Top Rated Stylists",
+                "operationId": "getTopRatedStylists",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "user_access_token": []
+                    }
+                ]
+            }
+        },
+        "/stylist/{offset}": {
+            "get": {
+                "tags": [
+                    "Stylist"
+                ],
+                "summary": "Get all stylists",
+                "operationId": "getAllStylists",
+                "parameters": [
+                    {
+                        "name": "offset",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "city",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "area",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "shop_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "services[]",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "user_access_token": []
+                    }
+                ]
+            }
+        },
         "/user/profile-picture": {
             "post": {
                 "tags": [
@@ -152,6 +304,50 @@
                                             "type": "string",
                                             "format": "binary"
                                         }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "user_access_token": []
+                    }
+                ]
+            }
+        },
+        "/profile/update": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Edit patient profile data",
+                "operationId": "editProfile",
+                "requestBody": {
+                    "description": "Edit patient profile data.",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "full_name": {
+                                        "description": "name",
+                                        "type": "string",
+                                        "example": "Full name"
+                                    },
+                                    "email": {
+                                        "description": "user email",
+                                        "type": "string",
+                                        "example": "abc@gg.com"
                                     }
                                 },
                                 "type": "object"

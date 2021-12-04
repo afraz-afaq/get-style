@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('profile_image')->nullable();
             $table->string('password');
             $table->string('phone')->nullable();
-            $table->tinyInteger('first_time_login')->default(\App\Helpers\Constant::FALSE);
+            $table->dateTime('first_time_login')->nullable();
             $table->tinyInteger('account_type');
             $table->softDeletes();
             $table->rememberToken();

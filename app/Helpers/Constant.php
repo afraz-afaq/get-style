@@ -8,9 +8,9 @@ class Constant
     const FALSE = 0;
 
     const ROLES = [
-        'CUSTOMER'   => 1,
-        'SHOP_OWNER' => 2,
-        'FREELANCER' => 3
+        'CUSTOMER' => 1,
+        'SHOP'     => 2,
+        'STYLIST'  => 3
     ];
 
     const HTTP_RESPONSE_MESSAGES = [
@@ -24,4 +24,6 @@ class Constant
     ];
 
     const APP_TOKEN_NAME = 'get-style-access';
+
+    const DEFAULT_PAGINATION_NUMBER = 20;
 }

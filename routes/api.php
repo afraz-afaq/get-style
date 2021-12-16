@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ShopStylistController;
 use App\Http\Controllers\MetaDataController;
+use App\Http\Controllers\ShopController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,12 @@ Route::group(['middleware' => ['auth:sanctum']], function ()
     {
         Route::get('/top-rated', [ShopStylistController::class, 'getTopRatedStylists']);
         Route::get('/{offset}', [ShopStylistController::class, 'getAllStylists']);
+    });
+
+    //Shop
+    Route::group(['prefix' => 'shop'], function ()
+    {
+        Route::get('/{offset}', [ShopController::class, 'getAllShops']);
     });
 
     Route::post('logout', [AuthController::class, 'logout']);

@@ -6,10 +6,11 @@ use App\Helpers\Constant;
 use App\Helpers\Helper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ShopStylist extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $guarded = [''];
 
@@ -31,7 +32,7 @@ class ShopStylist extends Model
 
     public function shopServices()
     {
-        return $this->hasOne(ShopService::class, 'shop_stylist_id', 'id')->orderBy('created_at','desc');
+        return $this->hasOne(ShopService::class, 'shop_stylist_id', 'id')->orderBy('created_at', 'desc');
     }
 
     public static function getTopRatedStylists()
@@ -47,14 +48,19 @@ class ShopStylist extends Model
 
     public static function getStylists($offset, $limit, $filters)
     {
+        $lat = isset($filters["lat"]) ? $filters["lat"] : null;
+        $lng = isset($filters["lng"]) ? $filters["lng"] : null;
+
         return self::query()
             ->with('user:id,full_name,profile_image,email,phone')
             ->with('shop:id,full_name,profile_image,email,phone', 'shop.shopProfile')
+            ->with('services:id,name')
             ->orderBy('avg_rating', 'desc')
             ->when(Helper::keyValueExists($filters, 'city'), fn($query) => $query->whereHas('shop', fn($query) => $query->whereHas('shopProfile', fn($query) => $query->where('city', 'like', '%' . $filters['city'] . '%'))))
+            ->when(Helper::keyValueExists($filters, 'radius'), fn($query) => $query->whereHas('shop', fn($query) => $query->whereHas('shopProfile', fn($query) => $query->whereRaw("( FLOOR(6371 * ACOS( COS( RADIANS( $lat ) ) * COS( RADIANS( shop_profiles.lat ) ) * COS( RADIANS( shop_profiles.lng ) - RADIANS( $lng ) ) + SIN( RADIANS( $lat ) ) * SIN( RADIANS( shop_profiles.lat ) ) )) ) <= " . $filters['radius']))))
             ->when(Helper::keyValueExists($filters, 'area'), fn($query) => $query->whereHas('shop', fn($query) => $query->whereHas('shopProfile', fn($query) => $query->where('area', 'like', '%' . $filters['area'] . '%'))))
             ->when(Helper::keyValueExists($filters, 'shop_id'), fn($query) => $query->where('shop_id', '=', $filters['shop_id']))
-            ->when(Helper::keyValueExists($filters, 'services'), fn($query)  => $query->whereHas('shopServices', fn($query) => $query->whereIn('service_id', $filters['services'])))
+            ->when(Helper::keyValueExists($filters, 'services'), fn($query) => $query->whereHas('shopServices', fn($query) => $query->whereIn('service_id', $filters['services'])))
             ->where('is_available', '=', Constant::TRUE)
             ->limit(10);
     }
@@ -72,4 +78,5 @@ class ShopStylist extends Model
 
         return $rules[$type];
     }
+
 }

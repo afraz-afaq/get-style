@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Constant;
+use App\Models\ShopProfile;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -84,7 +85,14 @@ class AuthController extends Controller
         {
             $requestData = $request->all();
 
-            $validator = Validator::make($requestData, User::getValidationRules('register'));
+            if ($requestData['account_type'] == Constant::ROLES['CUSTOMER'])
+            {
+                $validator = Validator::make($requestData, User::getValidationRules('register'));
+            }
+            else
+            {
+                $validator = Validator::make($requestData, User::getValidationRules('registerShop'));
+            }
 
             if ($validator->fails())
             {
@@ -92,9 +100,23 @@ class AuthController extends Controller
             }
 
             unset($requestData['password_confirmation']);
-            $requestData['first_time_login'] = Constant::TRUE;
+            $requestData['first_time_login'] = Carbon::now();
             $requestData['password'] = bcrypt($requestData['password']);
             $user = User::createOrUpdateRecord($requestData);
+            if ($requestData['account_type'] == Constant::ROLES['SHOP'])
+            {
+                $shop = [
+                    'shop_id'          => $user->id,
+                    'complete_address' => $requestData['complete_address'],
+                    'city'             => $requestData['city'],
+                    'area'             => $requestData['area'],
+                    'lat'              => $requestData['lat'],
+                    'lng'              => $requestData['lng'],
+                ];
+
+                ShopProfile::createOrUpdateRecord($shop);
+            }
+
             $response = [
                 'user'         => $user,
                 'access_token' => $user->createToken(Constant::APP_TOKEN_NAME)->plainTextToken,

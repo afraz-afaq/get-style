@@ -195,6 +195,97 @@
                 }
             }
         },
+        "/shop/{offset}": {
+            "get": {
+                "tags": [
+                    "Shop"
+                ],
+                "summary": "Get all shops",
+                "operationId": "getAllShops",
+                "parameters": [
+                    {
+                        "name": "offset",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "city",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "area",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "shop_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "radius",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "lat",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "float"
+                        }
+                    },
+                    {
+                        "name": "lng",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "float"
+                        }
+                    },
+                    {
+                        "name": "services[]",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "user_access_token": []
+                    }
+                ]
+            }
+        },
         "/stylist/top-rated": {
             "get": {
                 "tags": [
@@ -255,6 +346,30 @@
                         "required": false,
                         "schema": {
                             "type": "string"
+                        }
+                    },
+                    {
+                        "name": "radius",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "lat",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "float"
+                        }
+                    },
+                    {
+                        "name": "lng",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "float"
                         }
                     },
                     {

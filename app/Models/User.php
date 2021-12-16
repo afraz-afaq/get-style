@@ -59,6 +59,18 @@ class User extends Authenticatable
                 'phone'        => 'string',
                 'account_type' => 'integer|required',
             ],
+            'registerShop'   => [
+                'full_name'        => 'required|string',
+                'email'            => ['required', 'email', Rule::unique('users')->whereNull('deleted_at')],
+                'password'         => 'required|string|confirmed',
+                'phone'            => 'string',
+                'account_type'     => 'integer|required',
+                'complete_address' => 'required|string',
+                'city'             => 'required|string',
+                'area'             => 'required|string',
+                'lat'              => 'required|string',
+                'lng'              => 'required|string'
+            ],
             'login'          => [
                 'email'    => 'required|string',
                 'password' => 'required|string',

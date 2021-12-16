@@ -88,6 +88,30 @@ class ShopStylistController extends Controller
      *       type="string"
      *     )
      *   ),
+     *   @OA\Parameter(
+     *     name="radius",
+     *     in="query",
+     *     required=false,
+     *     @OA\Schema(
+     *       type="integer"
+     *     )
+     *   ),
+     *  @OA\Parameter(
+     *     name="lat",
+     *     in="query",
+     *     required=false,
+     *     @OA\Schema(
+     *       type="float"
+     *     )
+     *   ),
+     *  @OA\Parameter(
+     *     name="lng",
+     *     in="query",
+     *     required=false,
+     *     @OA\Schema(
+     *       type="float"
+     *     )
+     *   ),
      *  @OA\Parameter(
      *     name="services[]",
      *     in="query",

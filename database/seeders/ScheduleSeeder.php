@@ -37,6 +37,7 @@ class ScheduleSeeder extends Seeder
         ];
         Schedule::insert($schedules);
 
+        ScheduleSlot::truncate();
         $scheduleSlots = [
             [
                 'id'          => 1,
@@ -92,6 +93,7 @@ class ScheduleSeeder extends Seeder
 
         ScheduleSlot::insert($scheduleSlots);
 
+        ShopStylistSchedule::truncate();
         $shopStylistSchedule = [
             [
                 'id'              => 1,

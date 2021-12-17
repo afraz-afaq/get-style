@@ -19,6 +19,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        User::truncate();
         $users = [
             [
                 'id'           => 1,
@@ -104,6 +105,7 @@ class UserSeeder extends Seeder
 
         User::insert($users);
 
+        ShopProfile::truncate();
         $shops = [
             [
                 'id'               => 1,
@@ -133,6 +135,7 @@ class UserSeeder extends Seeder
 
         ShopProfile::insert($shops);
 
+        ShopStylist::truncate();
         $stylists = [
             [
                 'id'           => 1,

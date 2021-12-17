@@ -116,6 +116,7 @@ class ServiceSeeder extends Seeder
 
         Service::insert($services);
 
+        ShopServicesCharge::truncate();
         $shopServicesCharges = [
             [
                 'id'         => 1,
@@ -168,6 +169,7 @@ class ServiceSeeder extends Seeder
         ];
         ShopServicesCharge::insert($shopServicesCharges);
 
+        ShopService::truncate();
         $shopServices = [
             [
                 'id'              => 1,

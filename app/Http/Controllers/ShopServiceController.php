@@ -61,8 +61,10 @@ class ShopServiceController extends Controller
         $response = [];
         foreach ($availableServices as $item)
         {
-            $response[] = ['id' => $item['id'], 'name' => $item['name']];
+            $response['services'][] = ['id' => $item['id'], 'name' => $item['name']];
         }
+
+
         return $this->responseSuccess($response);
     }
 

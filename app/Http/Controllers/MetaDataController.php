@@ -26,10 +26,8 @@ class MetaDataController extends Controller
      */
     public function getAppMetadata()
     {
-
         try
         {
-            return "sdf";
             $response = [
                 "cities"   => ShopProfile::getShopCities(),
                 "areas"    => ShopProfile::getShopAreas(),

@@ -70,7 +70,7 @@ class ShopProfile extends Model
 
         return self::query()
             ->with('shop:id,full_name,profile_image,email,phone')
-            ->with('shopServices:service_id','shopServices.service:id,name')
+            ->with('shopServices:service_id', 'shopServices.service:id,name')
             ->orderBy('avg_rating', 'desc')
             ->when(Helper::keyValueExists($filters, 'city'), fn($query) => $query->where('city', 'like', '%' . $filters['city'] . '%'))
             ->when(Helper::keyValueExists($filters, 'radius'), fn($query) => $query->whereRaw("( FLOOR(6371 * ACOS( COS( RADIANS( $lat ) ) * COS( RADIANS( shop_profiles.lat ) ) * COS( RADIANS( shop_profiles.lng ) - RADIANS( $lng ) ) + SIN( RADIANS( $lat ) ) * SIN( RADIANS( shop_profiles.lat ) ) )) ) <= " . $filters['radius']))
@@ -83,7 +83,16 @@ class ShopProfile extends Model
 
     public function shopServices()
     {
-        return $this->hasManyThrough(ShopService::class, ShopStylist::class, 'shop_id', 'shop_stylist_id','shop_id','id');
+        return $this->hasManyThrough(ShopService::class, ShopStylist::class, 'shop_id', 'shop_stylist_id', 'shop_id', 'id');
     }
 
+    public static function getShop($shopId)
+    {
+        return self::query()
+            ->with('shop:id,full_name,profile_image,email,phone')
+            ->with('shopServices:service_id', 'shopServices.service:id,name')
+            ->where('shop_id', '=', $shopId)
+            ->get()
+            ->first();
+    }
 }

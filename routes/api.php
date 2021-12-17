@@ -45,6 +45,7 @@ Route::group(['middleware' => ['auth:sanctum']], function ()
     Route::group(['prefix' => 'shop'], function ()
     {
         Route::get('/{offset}', [ShopController::class, 'getAllShops']);
+        Route::get('profile/{shopId}', [ShopController::class, 'getShopProfile']);
     });
 
     Route::post('logout', [AuthController::class, 'logout']);

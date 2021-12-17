@@ -286,6 +286,38 @@
                 ]
             }
         },
+        "/shop/profile/{shopId}": {
+            "get": {
+                "tags": [
+                    "Shop"
+                ],
+                "summary": "Get shop profile",
+                "operationId": "getShopProfile",
+                "parameters": [
+                    {
+                        "name": "shopId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "user_access_token": []
+                    }
+                ]
+            }
+        },
         "/stylist/top-rated": {
             "get": {
                 "tags": [

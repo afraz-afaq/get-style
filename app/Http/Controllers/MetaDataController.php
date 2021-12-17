@@ -27,13 +27,20 @@ class MetaDataController extends Controller
     public function getAppMetadata()
     {
 
-        $response = [
-            "cities" => ShopProfile::getShopCities(),
-            "areas"  => ShopProfile::getShopAreas(),
-            "shops"  => ShopProfile::getAreaShops(),
-            "services" => Service::getServices()
-        ];
+        try
+        {
+            $response = [
+                "cities"   => ShopProfile::getShopCities(),
+                "areas"    => ShopProfile::getShopAreas(),
+                "shops"    => ShopProfile::getAreaShops(),
+                "services" => Service::getServices()
+            ];
 
-        return $this->responseSuccess($response);
+            return $this->responseSuccess($response);
+        }
+        catch (\Exception $e)
+        {
+            return $this->serverError($e);
+        }
     }
 }

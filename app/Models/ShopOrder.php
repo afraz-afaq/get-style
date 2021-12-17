@@ -39,9 +39,14 @@ class ShopOrder extends Model
         return $this->hasOne(ShopOrderDetail::class, 'shop_order_id', 'id');
     }
 
+    public function shopProfile()
+    {
+        return $this->belongsTo(ShopProfile::class, 'shop_id', 'shop_id');
+    }
+
     public static function getUserOrders($userId)
     {
-        return self::with('shopOrderDetail')->orderBy('id')->get()->toArray();
+        return self::with('shopOrderDetail.service')->with('shopProfile')->orderBy('id')->get()->toArray();
     }
 
     public static function saveOrder($requestedData, $services)

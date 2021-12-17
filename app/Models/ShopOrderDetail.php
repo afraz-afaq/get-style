@@ -11,4 +11,9 @@ class ShopOrderDetail extends Model
     use HasFactory, SoftDeletes;
 
     protected $guarded = [''];
+
+    public function service()
+    {
+        return $this->belongsTo(Service::class, 'service_id', 'id');
+    }
 }

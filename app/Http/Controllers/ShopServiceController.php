@@ -57,7 +57,13 @@ class ShopServiceController extends Controller
             ->with('service')
             ->get()
             ->pluck('service');
-        return $this->responseSuccess($availableServices->pluck('name', 'id')->toArray());
+
+        $response = [];
+        foreach ($availableServices as $item)
+        {
+            $response[] = ['id' => $item['id'], 'name' => $item['name']];
+        }
+        return $this->responseSuccess($response);
     }
 
 }

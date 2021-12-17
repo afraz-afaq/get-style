@@ -39,7 +39,7 @@ class MetaDataController extends Controller
         }
         catch (\Exception $e)
         {
-            return $e;
+            return $this->serverError($e);
         }
     }
 }

@@ -15,7 +15,7 @@ class MetaDataController extends Controller
     /**
      * @OA\Get(
      *
-     *     path="/metadata",
+     *     path="/appMetaData",
      *     tags={"Meta Configuration"},
      *     summary="Get App Metadata",
      *     operationId="getAppMetadata",

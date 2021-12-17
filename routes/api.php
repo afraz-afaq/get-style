@@ -22,9 +22,10 @@ use App\Http\Controllers\ShopOrderController;
 */
 
 //public routes
+
+Route::get('appMetaData', [MetaDataController::class, 'getAppMetadata']);
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
-Route::get('metadata', [MetaDataController::class, 'getAppMetadata']);
 
 // protected routes
 Route::group(['middleware' => ['auth:sanctum']], function ()

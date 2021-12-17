@@ -13,7 +13,7 @@ class ShopOrder extends Model
 
     protected $guarded = [''];
 
-    public function getNotCompletedOrderSlotsIdsForShop($shopId)
+    public static function getNotCompletedOrderSlotsIdsForShop($shopId)
     {
         return self::query()->select('schedule_slot_id')
             ->where('shop_id', '=', $shopId)

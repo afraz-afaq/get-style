@@ -318,6 +318,78 @@
                 ]
             }
         },
+        "/user/{userId}/order": {
+            "get": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Get user Order history",
+                "operationId": "userOrderHistory",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "user_access_token": []
+                    }
+                ]
+            }
+        },
+        "/shop/{shopId}/slot/{slotId}/services": {
+            "get": {
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Get services against slot for shop.",
+                "operationId": "timeSlotServices",
+                "parameters": [
+                    {
+                        "name": "shopId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "slotId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "user_access_token": []
+                    }
+                ]
+            }
+        },
         "/stylist/top-rated": {
             "get": {
                 "tags": [

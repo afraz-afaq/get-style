@@ -26,4 +26,9 @@ class Constant
     const APP_TOKEN_NAME = 'get-style-access';
 
     const DEFAULT_PAGINATION_NUMBER = 20;
+
+    const ORDER_PENDING = 1;
+    const ORDER_CONFIRMED = 2;
+    const ORDER_PROCESS = 3;
+    const ORDER_COMPLETED = 4;
 }

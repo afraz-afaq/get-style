@@ -14,6 +14,8 @@ class ShopProfile extends Model
 
     protected $guarded = [''];
 
+    protected $appends = ['schedule_slots_booked'];
+
     public static function getShopAreas()
     {
         $areas = self::query()->select(["city", "area"])->get();
@@ -91,8 +93,24 @@ class ShopProfile extends Model
         return self::query()
             ->with('shop:id,full_name,profile_image,email,phone')
             ->with('shopServices:service_id', 'shopServices.service:id,name')
+            ->with('stylists.user')
             ->where('shop_id', '=', $shopId)
             ->get()
             ->first();
+    }
+
+    public function scheduleSlots()
+    {
+        return $this->hasManyThrough(ScheduleSlot::class, Schedule::class, 'shop_id', 'schedule_id', 'shop_id', 'id')->select('schedule_slots.id', 'schedule_id', 'start_time', 'end_time');
+    }
+
+    public function getScheduleSlotsBookedAttribute()
+    {
+        return ShopOrder::getNotCompletedOrderSlotsIdsForShop($this->shop_id);
+    }
+
+    public function stylists()
+    {
+        return $this->hasMany(ShopStylist::class, 'shop_id', 'shop_id');
     }
 }

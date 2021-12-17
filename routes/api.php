@@ -7,6 +7,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ShopStylistController;
 use App\Http\Controllers\MetaDataController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\ShopServiceController;
+use App\Http\Controllers\ShopOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +34,7 @@ Route::group(['middleware' => ['auth:sanctum']], function ()
     {
         Route::post('/profile-picture', [UserController::class, 'updateProfilePicture']);
         Route::post('/change-password', [AuthController::class, 'changePassword']);
+        Route::get('{userId}/order', [ShopOrderController::class, 'userOrderHistory']);
     });
 
     //Stylist
@@ -46,6 +49,7 @@ Route::group(['middleware' => ['auth:sanctum']], function ()
     {
         Route::get('/{offset}', [ShopController::class, 'getAllShops']);
         Route::get('profile/{shopId}', [ShopController::class, 'getShopProfile']);
+        Route::get('{shopId}/slot/{slotId}/services', [ShopServiceController::class, 'timeSlotServices']);
     });
 
     Route::post('logout', [AuthController::class, 'logout']);

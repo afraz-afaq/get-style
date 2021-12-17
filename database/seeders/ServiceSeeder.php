@@ -17,6 +17,8 @@ class ServiceSeeder extends Seeder
      */
     public function run()
     {
+        Service::truncate();
+
         $services = [
             [
                 'id'         => 1,

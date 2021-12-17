@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\ShopOrder;
 use App\Models\ShopProfile;
 use App\Traits\ResponseHandler;
-use Illuminate\Http\Request;
 
 class ShopServiceController extends Controller
 {

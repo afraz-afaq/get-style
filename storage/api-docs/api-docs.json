@@ -350,6 +350,70 @@
                 ]
             }
         },
+        "/shop/order": {
+            "post": {
+                "tags": [
+                    "Shop"
+                ],
+                "summary": "Save shop order",
+                "operationId": "saveOrder",
+                "requestBody": {
+                    "description": "Save a new shop order.",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "user_id": {
+                                        "description": "Customer user id.",
+                                        "type": "number",
+                                        "example": "1"
+                                    },
+                                    "shop_id": {
+                                        "description": "Shop Id.",
+                                        "type": "number",
+                                        "example": "3"
+                                    },
+                                    "schedule_slot_id": {
+                                        "description": "Selected slot.",
+                                        "type": "number",
+                                        "example": "1"
+                                    },
+                                    "shop_stylist_id": {
+                                        "description": "Stylist id if order type 2",
+                                        "type": "number",
+                                        "example": "1"
+                                    },
+                                    "order_type": {
+                                        "description": "1=shop | 2=stylist",
+                                        "type": "number",
+                                        "example": "1"
+                                    },
+                                    "services": {
+                                        "description": "date & time standard timestamp",
+                                        "type": "number",
+                                        "example": "3"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "user_access_token": []
+                    }
+                ]
+            }
+        },
         "/shop/{shopId}/slot/{slotId}/services": {
             "get": {
                 "tags": [

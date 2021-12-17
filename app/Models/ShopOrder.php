@@ -5,10 +5,13 @@ namespace App\Models;
 use App\Helpers\Constant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ShopOrder extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
+
+    protected $guarded = [''];
 
     public function getNotCompletedOrderSlotsIdsForShop($shopId)
     {
@@ -39,5 +42,25 @@ class ShopOrder extends Model
     public static function getUserOrders($userId)
     {
         return self::with('shopOrderDetail')->orderBy('id')->get()->toArray();
+    }
+
+    public static function saveOrder($requestedData, $services)
+    {
+        $order = self::create($requestedData);
+
+        foreach ($services as $service)
+        {
+            $serviceRecord = ShopServicesCharge::where('service_id', '=', $service)
+                ->where('shop_id', '=', $order->shop_id)
+                ->get()
+                ->first();
+
+            ShopOrderDetail::create([
+                'shop_order_id' => $order->id,
+                'service_id'    => $service,
+                'charges'       => $serviceRecord->charges
+            ]);
+        }
+
     }
 }

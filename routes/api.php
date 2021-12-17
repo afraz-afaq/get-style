@@ -50,6 +50,7 @@ Route::group(['middleware' => ['auth:sanctum']], function ()
         Route::get('/{offset}', [ShopController::class, 'getAllShops']);
         Route::get('profile/{shopId}', [ShopController::class, 'getShopProfile']);
         Route::get('{shopId}/slot/{slotId}/services', [ShopServiceController::class, 'timeSlotServices']);
+        Route::post('/order', [ShopOrderController::class, 'saveOrder']);
     });
 
     Route::post('logout', [AuthController::class, 'logout']);

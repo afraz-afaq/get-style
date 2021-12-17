@@ -18,7 +18,7 @@ class MetaDataController extends Controller
      *     path="/metadata",
      *     tags={"Meta Configuration"},
      *     summary="Get App Metadata",
-     *     operationId="getWebAppMetaData",
+     *     operationId="getAppMetadata",
      *
      *     @OA\Response(response=200,description="Success"),
      *
@@ -29,6 +29,7 @@ class MetaDataController extends Controller
 
         try
         {
+            return "sdf";
             $response = [
                 "cities"   => ShopProfile::getShopCities(),
                 "areas"    => ShopProfile::getShopAreas(),

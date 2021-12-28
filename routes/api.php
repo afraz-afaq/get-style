@@ -36,6 +36,7 @@ Route::group(['middleware' => ['auth:sanctum']], function ()
         Route::post('/profile-picture', [UserController::class, 'updateProfilePicture']);
         Route::post('/change-password', [AuthController::class, 'changePassword']);
         Route::get('{userId}/order', [ShopOrderController::class, 'userOrderHistory']);
+        Route::post('availability/update', [UserController::class, 'updateAvailability']);
     });
 
     //Stylist
@@ -43,6 +44,7 @@ Route::group(['middleware' => ['auth:sanctum']], function ()
     {
         Route::get('/top-rated', [ShopStylistController::class, 'getTopRatedStylists']);
         Route::get('/{offset}', [ShopStylistController::class, 'getAllStylists']);
+        Route::get('profile/{stylistId}', [ShopStylistController::class, 'getShopStylistProfile']);
     });
 
     //Shop
@@ -52,6 +54,8 @@ Route::group(['middleware' => ['auth:sanctum']], function ()
         Route::get('profile/{shopId}', [ShopController::class, 'getShopProfile']);
         Route::get('{shopId}/slot/{slotId}/services', [ShopServiceController::class, 'timeSlotServices']);
         Route::post('/order', [ShopOrderController::class, 'saveOrder']);
+        Route::post('/order/status', [ShopOrderController::class, 'updateOrderStatus']);
+        Route::post('/order/assignStylist', [ShopOrderController::class, 'assignStylist']);
     });
 
     Route::post('logout', [AuthController::class, 'logout']);

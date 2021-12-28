@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Helpers\Constant;
 use App\Helpers\Helper;
 use App\Models\Patient;
+use App\Models\ShopProfile;
+use App\Models\ShopStylist;
 use App\Models\User;
 use App\Traits\ResponseHandler;
 use Exception;
@@ -153,6 +155,64 @@ class UserController extends Controller
         {
             return $this->serverError($e);
         }
+    }
+
+
+    /**
+     * @OA\POST(
+     *
+     *     path="/user/availability/update",
+     *     tags={"User"},
+     *     summary="Update users availability.",
+     *     operationId="updateAvailability",
+     *
+     *
+     *     @OA\RequestBody(
+     *     description="Update user availability status..",
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="is_available",
+     *                     description="Availability Status.",
+     *                     type="number",
+     *                     example="1 or 0"
+     *                 ),
+     *              )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *          response=200,
+     *          description="Success",
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *          ),
+     *      ),
+     *
+     *     security={
+     *          {"user_access_token": {}}
+     *     }
+     * )
+     */
+
+    public function updateAvailability(Request $request)
+    {
+        $data = $request->all();
+
+        if (auth()->user()->account_type == Constant::ROLES['SHOP'])
+        {
+            $user = ShopProfile::where(['shop_id' => auth()->user()->id])->first();
+        }
+        else
+        {
+            $user = ShopStylist::where(['stylist_id' => auth()->user()->id])->first();
+        }
+
+        $user->is_available = $data['is_available'];
+        $user->save();
+
+        return $this->responseSuccess();
     }
 
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Constant;
+use App\Models\ShopProfile;
 use App\Models\ShopStylist;
 use App\Traits\ResponseHandler;
 use Illuminate\Http\Request;
@@ -172,4 +173,40 @@ class ShopStylistController extends Controller
             return $this->serverError($exception);
         }
     }
+
+    /**
+     * @OA\Get(
+     *
+     *     path="/stylist/profile/{stylistId}",
+     *     tags={"Stylist"},
+     *     summary="Get shop stylist",
+     *     operationId="getShopStylistProfile",
+     *
+     *     @OA\Parameter(
+     *     name="stylistId",
+     *     in="path",
+     *     required=true,
+     *     @OA\Schema(
+     *       type="integer"
+     *     )
+     *   ),
+     *     @OA\Response(
+     *          response=200,
+     *          description="Success",
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *          ),
+     *      ),
+     *
+     *     security={
+     *          {"user_access_token": {}}
+     *     }
+     * )
+     */
+    public function getShopStylistProfile($stylistId)
+    {
+        $stylist = ShopStylist::getStylist($stylistId);
+        return $this->responseSuccess($stylist);
+    }
+
 }

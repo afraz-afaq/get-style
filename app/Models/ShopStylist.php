@@ -14,6 +14,8 @@ class ShopStylist extends Model
 
     protected $guarded = [''];
 
+    protected $appends = ['schedule_slots_booked'];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'stylist_id', 'id');
@@ -46,6 +48,17 @@ class ShopStylist extends Model
             ->get();
     }
 
+    public static function getStylist($stylistId)
+    {
+        return self::query()
+            ->with('user:id,full_name,profile_image,email,phone')
+            ->with('shop:id,full_name,profile_image,email,phone', 'shop.shopProfile')
+            ->with('shopServices.service:id,name')
+            ->where('id', '=', $stylistId)
+            ->limit(10)
+            ->get();
+    }
+
     public static function getStylists($offset, $limit, $filters)
     {
         $lat = isset($filters["lat"]) ? $filters["lat"] : null;
@@ -63,6 +76,36 @@ class ShopStylist extends Model
             ->when(Helper::keyValueExists($filters, 'services'), fn($query) => $query->whereHas('shopServices', fn($query) => $query->whereIn('service_id', $filters['services'])))
             ->where('is_available', '=', Constant::TRUE)
             ->limit(10);
+    }
+
+    public function scheduleSlots()
+    {
+        return $this->hasManyThrough(ScheduleSlot::class, Schedule::class, 'shop_id', 'schedule_id', 'shop_id', 'id')->select('schedule_slots.id', 'schedule_id', 'start_time', 'end_time');
+    }
+
+    public function getScheduleSlotsBookedAttribute()
+    {
+
+        $slots = $this->scheduleSlots;
+        $bookedSlots = ShopOrder::query()->select('schedule_slot_id')
+            ->where('shop_stylist_id', '=', $this->id)
+            ->whereIn('status', [Constant::ORDER_PENDING, Constant::ORDER_PROCESS, Constant::ORDER_CONFIRMED])
+            ->get()
+            ->pluck('schedule_slot_id')
+            ->toArray();
+
+        foreach ($slots as $slot)
+        {
+            if (array_search($slot->id, $bookedSlots) !== false)
+            {
+                $slot['is_available'] = Constant::FALSE;
+            }
+            else
+            {
+                $slot['is_available'] = Constant::TRUE;
+            }
+        }
+
     }
 
     public static function getValidationRules($type, $params = [])

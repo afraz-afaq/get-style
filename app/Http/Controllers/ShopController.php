@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Constant;
 use App\Models\ShopProfile;
+use App\Models\ShopStylist;
+use App\Models\User;
 use App\Traits\ResponseHandler;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;

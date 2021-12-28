@@ -106,7 +106,21 @@ class ShopProfile extends Model
 
     public function getScheduleSlotsBookedAttribute()
     {
-        return ShopOrder::getNotCompletedOrderSlotsIdsForShop($this->shop_id);
+        $slots = $this->scheduleSlots;
+        $bookedSlots = ShopOrder::getNotCompletedOrderSlotsIdsForShop($this->shop_id);
+        foreach ($slots as $slot)
+        {
+            if (array_search($slot->id, $bookedSlots) !== false)
+            {
+                $slot['is_available'] = Constant::FALSE;
+            }
+            else
+            {
+                $slot['is_available'] = Constant::TRUE;
+            }
+        }
+
+        return $slots;
     }
 
     public function stylists()

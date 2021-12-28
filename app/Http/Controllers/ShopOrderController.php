@@ -128,5 +128,112 @@ class ShopOrderController extends Controller
 
         return $this->responseSuccess();
     }
+
+
+    /**
+     * @OA\POST(
+     *
+     *     path="/shop/order/status",
+     *     tags={"Shop"},
+     *     summary="Update order status",
+     *     operationId="updateOrderStatus",
+     *
+     *
+     *     @OA\RequestBody(
+     *     description="Save a new shop order.",
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="order_id",
+     *                     description="Order Id.",
+     *                     type="number",
+     *                     example="3"
+     *                 ),
+     *                @OA\Property(
+     *                     property="status",
+     *                     description="Status of the order.",
+     *                     type="number",
+     *                     example="1"
+     *                 ),
+     *              )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *          response=200,
+     *          description="Success",
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *          ),
+     *      ),
+     *
+     *     security={
+     *          {"user_access_token": {}}
+     *     }
+     * )
+     */
+
+    public function updateOrderStatus(Request $request)
+    {
+        $data = $request->all();
+        $orderId = $data['order_id'];
+        $attributes = ['status' => $data['status']];
+        ShopOrder::updateOrder($orderId, $attributes);
+        return $this->responseSuccess();
+    }
+
+    /**
+     * @OA\POST(
+     *
+     *     path="/shop/order/assignStylist",
+     *     tags={"Shop"},
+     *     summary="Assign a stylist to a order.",
+     *     operationId="assignStylist",
+     *
+     *
+     *     @OA\RequestBody(
+     *     description="Assgin stylist to a order.",
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="order_id",
+     *                     description="Order Id.",
+     *                     type="number",
+     *                     example="3"
+     *                 ),
+     *                @OA\Property(
+     *                     property="shop_stylist_id",
+     *                     description="Stylist id if order type 2",
+     *                     type="number",
+     *                     example="1"
+     *                 ),
+     *              )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *          response=200,
+     *          description="Success",
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *          ),
+     *      ),
+     *
+     *     security={
+     *          {"user_access_token": {}}
+     *     }
+     * )
+     */
+
+    public function assignStylist(Request $request)
+    {
+        $data = $request->all();
+        $orderId = $data['order_id'];
+        $attributes = ['shop_stylist_id' => $data['shop_stylist_id']];
+        ShopOrder::updateOrder($orderId, $attributes);
+        return $this->responseSuccess();
+    }
 }
 

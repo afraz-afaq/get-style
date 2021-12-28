@@ -66,6 +66,12 @@ class ShopOrder extends Model
                 'charges'       => $serviceRecord->charges
             ]);
         }
+    }
+
+    public static function updateOrder($orderId, $attributes)
+    {
+        return self::query()->where('id', '=', $orderId)
+            ->update($attributes);
 
     }
 }

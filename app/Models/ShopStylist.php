@@ -105,7 +105,7 @@ class ShopStylist extends Model
                 $slot['is_available'] = Constant::TRUE;
             }
         }
-
+        return $slots;
     }
 
     public static function getValidationRules($type, $params = [])

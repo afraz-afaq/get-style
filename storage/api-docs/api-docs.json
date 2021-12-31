@@ -181,7 +181,7 @@
                 ]
             }
         },
-        "/metadata": {
+        "/appMetaData": {
             "get": {
                 "tags": [
                     "Meta Configuration"
@@ -414,6 +414,94 @@
                 ]
             }
         },
+        "/shop/order/status": {
+            "post": {
+                "tags": [
+                    "Shop"
+                ],
+                "summary": "Update order status",
+                "operationId": "updateOrderStatus",
+                "requestBody": {
+                    "description": "Save a new shop order.",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "order_id": {
+                                        "description": "Order Id.",
+                                        "type": "number",
+                                        "example": "3"
+                                    },
+                                    "status": {
+                                        "description": "Status of the order.",
+                                        "type": "number",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "user_access_token": []
+                    }
+                ]
+            }
+        },
+        "/shop/order/assignStylist": {
+            "post": {
+                "tags": [
+                    "Shop"
+                ],
+                "summary": "Assign a stylist to a order.",
+                "operationId": "assignStylist",
+                "requestBody": {
+                    "description": "Assgin stylist to a order.",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "order_id": {
+                                        "description": "Order Id.",
+                                        "type": "number",
+                                        "example": "3"
+                                    },
+                                    "shop_stylist_id": {
+                                        "description": "Stylist id if order type 2",
+                                        "type": "number",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "user_access_token": []
+                    }
+                ]
+            }
+        },
         "/shop/{shopId}/slot/{slotId}/services": {
             "get": {
                 "tags": [
@@ -567,6 +655,38 @@
                 ]
             }
         },
+        "/stylist/profile/{stylistId}": {
+            "get": {
+                "tags": [
+                    "Stylist"
+                ],
+                "summary": "Get shop stylist",
+                "operationId": "getShopStylistProfile",
+                "parameters": [
+                    {
+                        "name": "stylistId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "user_access_token": []
+                    }
+                ]
+            }
+        },
         "/user/profile-picture": {
             "post": {
                 "tags": [
@@ -631,6 +751,45 @@
                                         "description": "user email",
                                         "type": "string",
                                         "example": "abc@gg.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "user_access_token": []
+                    }
+                ]
+            }
+        },
+        "/user/availability/update": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update users availability.",
+                "operationId": "updateAvailability",
+                "requestBody": {
+                    "description": "Update user availability status..",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "is_available": {
+                                        "description": "Availability Status.",
+                                        "type": "number",
+                                        "example": "1 or 0"
                                     }
                                 },
                                 "type": "object"

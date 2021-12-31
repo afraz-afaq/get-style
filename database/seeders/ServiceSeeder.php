@@ -166,6 +166,55 @@ class ServiceSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
+
+            [
+                'id'         => 7,
+                'shop_id'    => 3,
+                'service_id' => 9,
+                'charges'    => 600,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id'         => 8,
+                'shop_id'    => 3,
+                'service_id' => 10,
+                'charges'    => 150,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id'         => 9,
+                'shop_id'    => 3,
+                'service_id' => 11,
+                'charges'    => 250,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id'         => 10,
+                'shop_id'    => 3,
+                'service_id' => 12,
+                'charges'    => 500,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id'         => 11,
+                'shop_id'    => 4,
+                'service_id' => 14,
+                'charges'    => 250,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'id'         => 12,
+                'shop_id'    => 4,
+                'service_id' => 15,
+                'charges'    => 500,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
         ];
         ShopServicesCharge::insert($shopServicesCharges);
 
@@ -212,6 +261,66 @@ class ServiceSeeder extends Seeder
                 'id'              => 6,
                 'shop_stylist_id' => 4,
                 'service_id'      => 6,
+                'created_at'      => Carbon::now(),
+                'updated_at'      => Carbon::now()
+            ],
+
+            [
+                'id'              => 7,
+                'shop_stylist_id' => 9,
+                'service_id'      => 9,
+                'created_at'      => Carbon::now(),
+                'updated_at'      => Carbon::now()
+            ],
+            [
+                'id'              => 8,
+                'shop_stylist_id' => 9,
+                'service_id'      => 10,
+                'created_at'      => Carbon::now(),
+                'updated_at'      => Carbon::now()
+            ],
+
+            [
+                'id'              => 9,
+                'shop_stylist_id' => 10,
+                'service_id'      => 11,
+                'created_at'      => Carbon::now(),
+                'updated_at'      => Carbon::now()
+            ],
+            [
+                'id'              => 10,
+                'shop_stylist_id' => 10,
+                'service_id'      => 12,
+                'created_at'      => Carbon::now(),
+                'updated_at'      => Carbon::now()
+            ],
+
+
+            [
+                'id'              => 11,
+                'shop_stylist_id' => 11,
+                'service_id'      => 14,
+                'created_at'      => Carbon::now(),
+                'updated_at'      => Carbon::now()
+            ],
+            [
+                'id'              => 12,
+                'shop_stylist_id' => 11,
+                'service_id'      => 15,
+                'created_at'      => Carbon::now(),
+                'updated_at'      => Carbon::now()
+            ],
+            [
+                'id'              => 13,
+                'shop_stylist_id' => 12,
+                'service_id'      => 15,
+                'created_at'      => Carbon::now(),
+                'updated_at'      => Carbon::now()
+            ],
+            [
+                'id'              => 14,
+                'shop_stylist_id' => 12,
+                'service_id'      => 14,
                 'created_at'      => Carbon::now(),
                 'updated_at'      => Carbon::now()
             ],

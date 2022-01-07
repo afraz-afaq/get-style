@@ -102,7 +102,7 @@ class User extends Authenticatable
 
     public static function updateProfileImage($userId, $fileName)
     {
-        $user = self::find($userId)->get()->first();
+        $user = self::query()->where('id','=',$userId)->get()->first();
         $user->profile_image = $fileName;
         $user->save();
     }

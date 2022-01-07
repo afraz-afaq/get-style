@@ -68,7 +68,7 @@ class UserController extends Controller
                 return $this->responseErrorValidation($validator->errors());
             }
 
-            $userId = auth()->id();
+            $userId = auth()->user()->id;
             $file = $request->file('profile_picture');
             $fileName = "profile-" . $userId . "-" . $file->getClientOriginalName();
             Helper::uploadFile($file, $fileName);

@@ -318,6 +318,28 @@
                 ]
             }
         },
+        "/shop/top-rated": {
+            "get": {
+                "tags": [
+                    "Shop"
+                ],
+                "summary": "Top Rated Shops",
+                "operationId": "getTopRatedShops",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "user_access_token": []
+                    }
+                ]
+            }
+        },
         "/user/{userId}/order": {
             "get": {
                 "tags": [

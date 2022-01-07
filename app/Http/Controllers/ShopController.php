@@ -175,4 +175,39 @@ class ShopController extends Controller
         return $this->responseSuccess($shop);
     }
 
+
+    /**
+     * @OA\Get(
+     *
+     *     path="/shop/top-rated",
+     *     tags={"Shop"},
+     *     summary="Top Rated Shops",
+     *     operationId="getTopRatedShops",
+     *     @OA\Response(
+     *          response=200,
+     *          description="Success",
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *          ),
+     *      ),
+     *
+     *     security={
+     *          {"user_access_token": {}}
+     *     }
+     * )
+     */
+    public function getTopRatedShops()
+    {
+        try
+        {
+            $response = ShopProfile::getTopRatedShops();
+            return $this->responseSuccess($response);
+        }
+        catch (\Exception $e)
+        {
+            return $this->serverError($e);
+        }
+
+    }
+
 }

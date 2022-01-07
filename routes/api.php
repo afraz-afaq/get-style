@@ -50,6 +50,7 @@ Route::group(['middleware' => ['auth:sanctum']], function ()
     //Shop
     Route::group(['prefix' => 'shop'], function ()
     {
+        Route::get('/top-rated', [ShopController::class, 'getTopRatedShops']);
         Route::get('/{offset}', [ShopController::class, 'getAllShops']);
         Route::get('profile/{shopId}', [ShopController::class, 'getShopProfile']);
         Route::get('{shopId}/slot/{slotId}/services', [ShopServiceController::class, 'timeSlotServices']);

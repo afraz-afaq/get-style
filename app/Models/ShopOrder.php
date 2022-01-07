@@ -46,7 +46,7 @@ class ShopOrder extends Model
 
     public static function getUserOrders($userId)
     {
-        return self::with('shopOrderDetail.service')->with('shopProfile')->orderBy('id')->get()->toArray();
+        return self::with('shopOrderDetail.service')->with('shopProfile.shop')->orderBy('shop_orders.id')->get()->toArray();
     }
 
     public static function saveOrder($requestedData, $services)

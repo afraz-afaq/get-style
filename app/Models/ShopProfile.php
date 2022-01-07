@@ -79,8 +79,18 @@ class ShopProfile extends Model
             ->when(Helper::keyValueExists($filters, 'area'), fn($query) => $query->where('area', 'like', '%' . $filters['area'] . '%'))
             ->when(Helper::keyValueExists($filters, 'shop_id'), fn($query) => $query->where('shop_id', '=', $filters['shop_id']))
             ->when(Helper::keyValueExists($filters, 'services'), fn($query) => $query->whereHas('shopServices', fn($query) => $query->whereIn('service_id', $filters['services'])))
+            ->where('is_available', '=', Constant::TRUE);
+    }
+
+    public static function getTopRatedShops()
+    {
+        return self::query()
+            ->with('shop:id,full_name,profile_image,email,phone')
+            ->with('shopServices:service_id', 'shopServices.service:id,name')
+            ->orderBy('avg_rating', 'desc')
             ->where('is_available', '=', Constant::TRUE)
-            ->limit(10);
+            ->limit(10)
+            ->get();
     }
 
     public function shopServices()

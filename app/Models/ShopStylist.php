@@ -74,8 +74,7 @@ class ShopStylist extends Model
             ->when(Helper::keyValueExists($filters, 'area'), fn($query) => $query->whereHas('shop', fn($query) => $query->whereHas('shopProfile', fn($query) => $query->where('area', 'like', '%' . $filters['area'] . '%'))))
             ->when(Helper::keyValueExists($filters, 'shop_id'), fn($query) => $query->where('shop_id', '=', $filters['shop_id']))
             ->when(Helper::keyValueExists($filters, 'services'), fn($query) => $query->whereHas('shopServices', fn($query) => $query->whereIn('service_id', $filters['services'])))
-            ->where('is_available', '=', Constant::TRUE)
-            ->limit(10);
+            ->where('is_available', '=', Constant::TRUE);
     }
 
     public function scheduleSlots()

@@ -14,7 +14,7 @@ class ShopStylist extends Model
 
     protected $guarded = [''];
 
-    protected $appends = ['schedule_slots_booked'];
+    protected $appends = ['schedule_slots_booked', 'serviceCharges'];
 
     public function user()
     {
@@ -119,6 +119,21 @@ class ShopStylist extends Model
         ];
 
         return $rules[$type];
+    }
+
+    public function getServiceChargesAttribute()
+    {
+        $shopServices = $this->services;
+
+        foreach ($shopServices as $service)
+        {
+            $shopServiceCharge = ShopServicesCharge::where('shop_id', '=', $this->shop->id)
+                ->where('service_id', '=', $service->id)->first();
+
+            $service['charges'] = $shopServiceCharge;
+        }
+
+        return $shopServices;
     }
 
 }

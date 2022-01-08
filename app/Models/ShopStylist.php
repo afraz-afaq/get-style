@@ -130,7 +130,7 @@ class ShopStylist extends Model
             $shopServiceCharge = ShopServicesCharge::where('shop_id', '=', $this->shop->id)
                 ->where('service_id', '=', $service->id)->first();
 
-            $service['charges'] = $shopServiceCharge;
+            $service['charges'] = $shopServiceCharge->charges;
         }
 
         return $shopServices;

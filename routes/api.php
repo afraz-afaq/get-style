@@ -9,6 +9,7 @@ use App\Http\Controllers\MetaDataController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\ShopServiceController;
 use App\Http\Controllers\ShopOrderController;
+use App\Http\Controllers\RatingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,7 @@ Route::group(['middleware' => ['auth:sanctum']], function ()
         Route::post('/change-password', [AuthController::class, 'changePassword']);
         Route::get('{userId}/order', [ShopOrderController::class, 'userOrderHistory']);
         Route::post('availability/update', [UserController::class, 'updateAvailability']);
+        Route::post('rate', [RatingController::class, 'rate']);
     });
 
     //Stylist

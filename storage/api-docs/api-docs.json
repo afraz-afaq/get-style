@@ -195,6 +195,65 @@
                 }
             }
         },
+        "/user/rate": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Rate shop or Stylist",
+                "operationId": "rate",
+                "requestBody": {
+                    "description": "Rate shop or Stylist.",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "user_id": {
+                                        "description": "User Id that is rating",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "rate_type": {
+                                        "description": "1 for shop and 2 for stylist",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "to_be_rated": {
+                                        "description": "Shop or stylist ID based on type",
+                                        "type": "integer",
+                                        "example": "3"
+                                    },
+                                    "rating": {
+                                        "description": "Rating by the user",
+                                        "type": "float",
+                                        "example": "3.5"
+                                    },
+                                    "review": {
+                                        "description": "Review by the user.",
+                                        "type": "string",
+                                        "example": "Very nice environment."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "user_access_token": []
+                    }
+                ]
+            }
+        },
         "/shop/{offset}": {
             "get": {
                 "tags": [

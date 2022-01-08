@@ -14,7 +14,7 @@ class ShopProfile extends Model
 
     protected $guarded = [''];
 
-    protected $appends = ['schedule_slots_booked','serviceCharges'];
+    protected $appends = ['schedule_slots_booked', 'serviceCharges'];
 
     public static function getShopAreas()
     {
@@ -147,7 +147,7 @@ class ShopProfile extends Model
             $shopServiceCharge = ShopServicesCharge::where('shop_id', '=', $this->shop->id)
                 ->where('service_id', '=', $ShopService->service->id)->first();
 
-            $ShopService->service['charges'] = $shopServiceCharge;
+            $ShopService->service['charges'] = $shopServiceCharge->charges;
         }
 
         return $shopServices;

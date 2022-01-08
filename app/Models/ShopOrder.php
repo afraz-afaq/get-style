@@ -72,6 +72,5 @@ class ShopOrder extends Model
     {
         return self::query()->where('id', '=', $orderId)
             ->update($attributes);
-
     }
 }

@@ -6,11 +6,13 @@ use App\Models\ShopProfile;
 use App\Models\ShopRating;
 use App\Models\ShopStylist;
 use App\Models\ShopStylistRating;
+use App\Traits\ResponseHandler;
 use Illuminate\Http\Request;
 
 class RatingController extends Controller
 {
 
+    use ResponseHandler;
 
     /**
      * @OA\Post(
@@ -113,6 +115,8 @@ class RatingController extends Controller
                 $shopStylist->avg_rating = ShopStylistRating::query()->where('shop_stylist_id', '=', $requestData['to_be_rated'])->sum('rating') / $count;
                 $shopStylist->save();
             }
+
+            return $this->responseSuccess('Rating saved successfully.');
         }
         catch (\Exception $exception)
         {

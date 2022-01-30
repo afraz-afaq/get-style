@@ -102,7 +102,7 @@ class User extends Authenticatable
 
     public static function updateProfileImage($userId, $fileName)
     {
-        $user = self::query()->where('id','=',$userId)->get()->first();
+        $user = self::query()->where('id', '=', $userId)->get()->first();
         $user->profile_image = $fileName;
         $user->save();
     }
@@ -116,5 +116,10 @@ class User extends Authenticatable
     public function shopProfile()
     {
         return $this->hasOne(ShopProfile::class, 'shop_id', 'id');
+    }
+
+    public function shopRatings()
+    {
+        return $this->hasMany(ShopRating::class, 'shop_id', 'id');
     }
 }

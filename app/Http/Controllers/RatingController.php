@@ -97,7 +97,7 @@ class RatingController extends Controller
                 $count = ShopRating::where('shop_id', '=', $requestData['to_be_rated'])->count();
                 $ratingSum = ShopRating::query()->where('shop_id', '=', $requestData['to_be_rated'])->sum('rating');
                 $shop->total_reviews = $count;
-                $shop->avg_rating = $ratingSum / $count;
+                $shop->avg_rating = intval($ratingSum / $count);
                 $shop->save();
             }
             else
@@ -112,11 +112,79 @@ class RatingController extends Controller
                 $shopStylist = ShopStylist::where('id', '=', $requestData['to_be_rated'])->first();
                 $count = ShopStylistRating::where('shop_stylist_id', '=', $requestData['to_be_rated'])->count();
                 $shopStylist->total_reviews = $count;
-                $shopStylist->avg_rating = ShopStylistRating::query()->where('shop_stylist_id', '=', $requestData['to_be_rated'])->sum('rating') / $count;
+                $shopStylist->avg_rating = intval(ShopStylistRating::query()->where('shop_stylist_id', '=', $requestData['to_be_rated'])->sum('rating') / $count);
                 $shopStylist->save();
             }
 
-            return $this->responseSuccess('Rating saved successfully.');
+            return $this->responseSuccess();
+        }
+        catch (\Exception $exception)
+        {
+            return $this->serverError($exception);
+        }
+    }
+
+
+
+    /**
+     * @OA\Post(
+     *
+     *     path="/user/getRatings",
+     *     tags={"User"},
+     *     summary="Get Ratings of shop or stylist.",
+     *     operationId="getReviews",
+     *
+     *     @OA\RequestBody(
+     *         description="Get Ratings of shop or stylist.",
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="reviews_for",
+     *                     description="1 for shop and 2 for stylist.",
+     *                     type="integer",
+     *                     example="1"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="reviews_for_id",
+     *                     description="Shop id or stylist id.",
+     *                     type="integer",
+     *                     example="1"
+     *                 ),
+     *              )
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *          response=200,
+     *          description="Success",
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *          ),
+     *      ),
+     *
+     *     security={
+     *          {"user_access_token": {}}
+     *     }
+     * )
+     */
+
+    public function getReviews(Request $request)
+    {
+        try
+        {
+            $requestData = $request->all();
+            if ($requestData['reviews_for'] == 1)
+            {
+                $reviews = ShopRating::where('shop_id', '=', $requestData['reviews_for_id'])->with('user')->get();
+            }
+            else
+            {
+                $reviews = ShopStylistRating::where('shop_stylist_id', '=', $requestData['reviews_for_id'])->with('user')->get();
+            }
+
+            return $this->responseSuccess(['reviews' => $reviews]);
         }
         catch (\Exception $exception)
         {

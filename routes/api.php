@@ -39,6 +39,7 @@ Route::group(['middleware' => ['auth:sanctum']], function ()
         Route::get('{userId}/order', [ShopOrderController::class, 'userOrderHistory']);
         Route::post('availability/update', [UserController::class, 'updateAvailability']);
         Route::post('rate', [RatingController::class, 'rate']);
+        Route::post('getRatings', [RatingController::class, 'getReviews']);
     });
 
     //Stylist

@@ -136,4 +136,8 @@ class ShopStylist extends Model
         return $shopServices;
     }
 
+    public function shopStylistRatings()
+    {
+        return $this->hasMany(ShopStylist::class, 'shop_stylist_id', 'id');
+    }
 }

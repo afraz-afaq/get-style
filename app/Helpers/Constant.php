@@ -31,4 +31,8 @@ class Constant
     const ORDER_CONFIRMED = 2;
     const ORDER_PROCESS = 3;
     const ORDER_COMPLETED = 4;
+
+    const NOTIFICATION_TYPES = [
+        'TEST'       => 1,
+    ];
 }

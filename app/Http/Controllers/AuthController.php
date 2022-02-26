@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Constant;
 use App\Models\ShopProfile;
 use App\Models\User;
+use App\Models\UserDevice;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Traits\ResponseHandler;
@@ -121,6 +122,7 @@ class AuthController extends Controller
                 'user'         => $user,
                 'access_token' => $user->createToken(Constant::APP_TOKEN_NAME)->plainTextToken,
             ];
+
             return $this->responseSuccess($response);
         }
         catch (\Exception $e)
@@ -157,6 +159,18 @@ class AuthController extends Controller
      *                     description="user secure password.",
      *                     type="string",
      *                     example="123456"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="device_token",
+     *                     description="FCM Token.",
+     *                     type="string",
+     *                     example="8dsfu98pdsabfd9f8b7s9f7adf7b8adb7f"
+     *                 ),
+     *                  @OA\Property(
+     *                     property="device_meta",
+     *                     description="Device information.",
+     *                     type="string",
+     *                     example="GetStyle - v1.2 DEVICE STK-L21 SDK VERSION 29 ANDROID 10!"
      *                 )
      *              )
      *         )
@@ -189,6 +203,7 @@ class AuthController extends Controller
                     'user'         => $user,
                     'access_token' => $user->createToken(Constant::APP_TOKEN_NAME)->plainTextToken,
                 ];
+                UserDevice::saveToken($user->id, $requestData['device_token'], $requestData['device_meta']);
                 return $this->responseSuccess($response);
             }
             else

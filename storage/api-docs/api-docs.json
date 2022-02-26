@@ -96,6 +96,16 @@
                                         "description": "user secure password.",
                                         "type": "string",
                                         "example": "123456"
+                                    },
+                                    "device_token": {
+                                        "description": "FCM Token.",
+                                        "type": "string",
+                                        "example": "8dsfu98pdsabfd9f8b7s9f7adf7b8adb7f"
+                                    },
+                                    "device_meta": {
+                                        "description": "Device information.",
+                                        "type": "string",
+                                        "example": "Nonsuline - v1.2 DEVICE STK-L21 SDK VERSION 29 ANDROID 10!"
                                     }
                                 },
                                 "type": "object"
@@ -195,6 +205,46 @@
                 }
             }
         },
+        "/notifyDummy/{typeId}/{fcm_token}": {
+            "get": {
+                "tags": [
+                    "Notification"
+                ],
+                "summary": "Send dummy notification",
+                "operationId": "notifyDummy",
+                "parameters": [
+                    {
+                        "name": "typeId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "fcm_token",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "user_access_token": []
+                    }
+                ]
+            }
+        },
         "/user/rate": {
             "post": {
                 "tags": [
@@ -232,6 +282,50 @@
                                         "description": "Review by the user.",
                                         "type": "string",
                                         "example": "Very nice environment."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "user_access_token": []
+                    }
+                ]
+            }
+        },
+        "/user/getRatings": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get Ratings of shop or stylist.",
+                "operationId": "getReviews",
+                "requestBody": {
+                    "description": "Get Ratings of shop or stylist.",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "reviews_for": {
+                                        "description": "1 for shop and 2 for stylist.",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "reviews_for_id": {
+                                        "description": "Shop id or stylist id.",
+                                        "type": "integer",
+                                        "example": "1"
                                     }
                                 },
                                 "type": "object"

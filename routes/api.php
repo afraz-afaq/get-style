@@ -10,6 +10,7 @@ use App\Http\Controllers\ShopController;
 use App\Http\Controllers\ShopServiceController;
 use App\Http\Controllers\ShopOrderController;
 use App\Http\Controllers\RatingController;
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,8 @@ Route::get('appMetaData', [MetaDataController::class, 'getAppMetadata']);
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 
+Route::get('notifyDummy/{typeId}/{fcm_token}', [NotificationController::class, 'notifyDummy']);
+Route::post('notify', [NotificationController::class, 'notify']);
 // protected routes
 Route::group(['middleware' => ['auth:sanctum']], function ()
 {

@@ -246,6 +246,7 @@ class AuthController extends Controller
     public function logout()
     {
         auth()->user()->tokens()->delete();
+        UserDevice::where('user_id', auth()->user()->id)->delete();
         return $this->responseSuccess(['Logout successfully!']);
     }
 

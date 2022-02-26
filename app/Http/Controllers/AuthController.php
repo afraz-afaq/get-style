@@ -203,7 +203,10 @@ class AuthController extends Controller
                     'user'         => $user,
                     'access_token' => $user->createToken(Constant::APP_TOKEN_NAME)->plainTextToken,
                 ];
-                UserDevice::saveToken($user->id, $requestData['device_token'], $requestData['device_meta']);
+                if (isset($requestData['device_token']) && isset($requestData['device_meta']))
+                {
+                    UserDevice::saveToken($user->id, $requestData['device_token'], $requestData['device_meta']);
+                }
                 return $this->responseSuccess($response);
             }
             else

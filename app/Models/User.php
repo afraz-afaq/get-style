@@ -72,10 +72,10 @@ class User extends Authenticatable
                 'lng'              => 'required|string'
             ],
             'login'          => [
-                'email'        => 'required|string',
-                'password'     => 'required|string',
-                'device_token' => 'required',
-                'device_meta'  => 'required',
+                'email'    => 'required|string',
+                'password' => 'required|string',
+//                'device_token' => 'required',
+//                'device_meta'  => 'required',
             ],
             'changePassword' => [
                 'old_password'          => 'required',

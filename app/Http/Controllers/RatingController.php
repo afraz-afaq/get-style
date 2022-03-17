@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Helper;
 use App\Models\ShopProfile;
 use App\Models\ShopRating;
 use App\Models\ShopStylist;
 use App\Models\ShopStylistRating;
 use App\Traits\ResponseHandler;
 use Illuminate\Http\Request;
+use Sentiment\Analyzer;
 
 class RatingController extends Controller
 {
@@ -83,7 +85,9 @@ class RatingController extends Controller
         try
         {
             $requestData = $request->all();
-
+            $analyzer = new Analyzer();
+            $output = $analyzer->getSentiment($requestData['review']);
+            $requestData['rating'] = Helper::getRatingFromSentimentOutput($output);
             if ($requestData['rate_type'] == 1)
             {
                 ShopRating::create([
@@ -123,7 +127,6 @@ class RatingController extends Controller
             return $this->serverError($exception);
         }
     }
-
 
 
     /**

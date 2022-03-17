@@ -105,7 +105,7 @@
                                     "device_meta": {
                                         "description": "Device information.",
                                         "type": "string",
-                                        "example": "Nonsuline - v1.2 DEVICE STK-L21 SDK VERSION 29 ANDROID 10!"
+                                        "example": "GetStyle - v1.2 DEVICE STK-L21 SDK VERSION 29 ANDROID 10!"
                                     }
                                 },
                                 "type": "object"

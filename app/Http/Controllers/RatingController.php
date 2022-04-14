@@ -86,6 +86,21 @@ class RatingController extends Controller
         {
             $requestData = $request->all();
             $analyzer = new Analyzer();
+
+            //new words not in the dictionary
+            $newWords = [
+                'rubbish'=> '-1.5',
+                'mediocre' => '-1.0',
+                'agressive' => '-0.5',
+                'professional' => '1.5',
+                'professionalism' => '1.5',
+                'reasonable' => '1.5',
+            ];
+
+            //Dynamically update the dictionary with the new words
+            $analyzer->updateLexicon($newWords);
+
+
             $output = $analyzer->getSentiment($requestData['review']);
             $requestData['rating'] = Helper::getRatingFromSentimentOutput($output);
             if ($requestData['rate_type'] == 1)

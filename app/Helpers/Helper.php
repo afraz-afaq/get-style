@@ -18,39 +18,39 @@ class Helper
     public static function getRatingFromSentimentOutput($output)
     {
         $compound = $output['compound'];
-        if ($compound <= 0.15)
+        if ($compound <= 0)
+        {
+            return 0.5;
+        }
+        elseif ($compound > 0 && $compound <= 0.10)
         {
             return 1;
         }
-        elseif ($compound > 0.15 && $compound < 0.2)
+        elseif ($compound > 0.10 && $compound <= 0.15)
         {
             return 1.5;
         }
-        elseif ($compound >= 0.2 && $compound < 0.3)
+        elseif ($compound > 0.15 && $compound <= 0.2)
         {
             return 2;
         }
-        elseif ($compound >= 0.3 && $compound < 0.4)
+        elseif ($compound > 0.2 && $compound <= 0.25)
         {
             return 2.5;
         }
-        elseif ($compound >= 0.4 && $compound < 0.45)
+        elseif ($compound > 0.25 && $compound <= 0.3)
         {
             return 3;
         }
-        elseif ($compound >= 0.45 && $compound < 0.5)
+        elseif ($compound > 0.3 && $compound <= 0.35)
         {
             return 3.5;
         }
-        elseif ($compound >= 0.5 && $compound < 0.65)
+        elseif ($compound > 0.35 && $compound <= 0.5)
         {
             return 4;
         }
-        elseif ($compound >= 0.65 && $compound < 0.75)
-        {
-            return 4;
-        }
-        elseif ($compound >= 0.75 && $compound < 0.9)
+        elseif ($compound > 0.5 && $compound <= 0.7)
         {
             return 4.5;
         }

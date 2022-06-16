@@ -44,9 +44,21 @@ class ShopOrder extends Model
         return $this->belongsTo(ShopProfile::class, 'shop_id', 'shop_id');
     }
 
-    public static function getUserOrders($userId)
+    public function user()
     {
-        return self::with('shopOrderDetail.service')->with('shopStylist.user')->with('shopProfile.shop')->orderBy('shop_orders.id')->get()->toArray();
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public static function getUserOrders($userId, $type = 1)
+    {
+        if ($type == 1)
+        {
+            return self::with('shopOrderDetail.service')->with('shopStylist.user')->with('shopProfile.shop')->where('user_id', $userId)->orderBy('shop_orders.id')->get()->toArray();
+        }
+        else
+        {
+            return self::with('shopOrderDetail.service')->with('shopStylist.user')->with('user')->where('shop_id', $userId)->orderBy('shop_orders.id')->get()->toArray();
+        }
     }
 
     public static function saveOrder($requestedData, $services)

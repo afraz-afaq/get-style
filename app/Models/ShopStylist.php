@@ -140,4 +140,15 @@ class ShopStylist extends Model
     {
         return $this->hasMany(ShopStylist::class, 'shop_stylist_id', 'id');
     }
+
+    public static function getShopStylists($shopId)
+    {
+        return self::query()
+            ->with('user:id,full_name,profile_image,email,phone')
+            ->with('shop:id,full_name,profile_image,email,phone', 'shop.shopProfile')
+            ->with('services:id,name')
+            ->orderBy('avg_rating', 'desc')
+            ->where('shop_id', '=', $shopId)
+            ->where('is_available', '=', Constant::TRUE);
+    }
 }

@@ -138,6 +138,7 @@ class UserController extends Controller
 
                     $validator = Validator::make($requestData, [
                         'full_name' => 'required|string',
+                        'phone'     => 'required|string',
                         'email'     => 'required|string|unique:users,email,' . $user->id . ',id,deleted_at,NULL',
                     ]);
 
@@ -147,6 +148,35 @@ class UserController extends Controller
                     }
 
                     User::updateUser($requestData, ['id' => $user->id]);
+                    break;
+
+                case Constant::ROLES['SHOP']:
+                    $requestData = $request->all();
+
+                    $validator = Validator::make($requestData, [
+                        'full_name'        => 'required|string',
+                        'email'            => 'required|string|unique:users,email,' . $user->id . ',id,deleted_at,NULL',
+                        'phone'            => 'string',
+                        'complete_address' => 'string',
+                        'city'             => 'string',
+                        'area'             => 'string',
+                        'lat'              => 'string',
+                        'lng'              => 'string'
+                    ]);
+
+                    if ($validator->fails())
+                    {
+                        return $this->responseErrorValidation($validator->errors());
+                    }
+
+                    User::updateUser(['full_name' => $requestData['full_name'], 'email' => $requestData['email'], 'phone' => $requestData['phone']], ['id' => $user->id]);
+                    ShopProfile::updateShop($user->id,
+                        [
+                            'complete_address' => $requestData['complete_address'],
+                            'city'             => $requestData['city'], 'area' => $requestData['area'],
+                            'lat'              => $requestData['lat'], 'lng' => $requestData['lng']
+                        ]
+                    );
                     break;
             }
             return $this->responseSuccess();

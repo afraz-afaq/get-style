@@ -493,6 +493,173 @@
                 ]
             }
         },
+        "/shop/add/stylist": {
+            "post": {
+                "tags": [
+                    "Shop"
+                ],
+                "summary": "Add shop stylist",
+                "operationId": "addStylist",
+                "requestBody": {
+                    "description": "Create a new stylist for shop.",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "full_name": {
+                                        "description": "fullname of the user.",
+                                        "type": "string",
+                                        "example": "Asad Shareef"
+                                    },
+                                    "email": {
+                                        "description": "email of the user.",
+                                        "type": "string",
+                                        "example": "asad@gmail.com"
+                                    },
+                                    "phone": {
+                                        "description": "Phone of the user.",
+                                        "type": "string",
+                                        "example": "923482269069"
+                                    },
+                                    "account_type": {
+                                        "description": "Type of user.",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "experience": {
+                                        "description": "Experience of stylist",
+                                        "type": "integer",
+                                        "example": "0"
+                                    },
+                                    "schedule_id": {
+                                        "description": "Schedule of stylist",
+                                        "type": "number",
+                                        "example": "1"
+                                    },
+                                    "services": {
+                                        "description": "Services",
+                                        "type": "number",
+                                        "example": "[2,3,4]"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "user_access_token": []
+                    }
+                ]
+            }
+        },
+        "/shop/{shopId}/stylists": {
+            "get": {
+                "tags": [
+                    "Shop"
+                ],
+                "summary": "Get shop Stylists",
+                "operationId": "getShopStylists",
+                "parameters": [
+                    {
+                        "name": "shopId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "user_access_token": []
+                    }
+                ]
+            }
+        },
+        "/shop/schedule": {
+            "post": {
+                "tags": [
+                    "Shop"
+                ],
+                "summary": "Add shop schedule",
+                "operationId": "createSchedule",
+                "requestBody": {
+                    "description": "Create a new schedule for shop.",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "name of the schedule.",
+                                        "type": "string",
+                                        "example": "Full Day"
+                                    },
+                                    "timings": {
+                                        "description": "timings",
+                                        "type": "number",
+                                        "example": "[['9:00','10:00'],['13:00','14:00']]"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "user_access_token": []
+                    }
+                ]
+            }
+        },
+        "/shop/schedules": {
+            "get": {
+                "tags": [
+                    "Shop"
+                ],
+                "summary": "Get Shop Schedules",
+                "operationId": "getShopSchedules",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "user_access_token": []
+                    }
+                ]
+            }
+        },
         "/user/{userId}/order": {
             "get": {
                 "tags": [
@@ -677,6 +844,38 @@
                 ]
             }
         },
+        "/shop/{shopId}/order": {
+            "get": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Get shop Order history",
+                "operationId": "shopOrderHistory",
+                "parameters": [
+                    {
+                        "name": "shopId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "user_access_token": []
+                    }
+                ]
+            }
+        },
         "/shop/{shopId}/slot/{slotId}/services": {
             "get": {
                 "tags": [
@@ -702,6 +901,28 @@
                         }
                     }
                 ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "user_access_token": []
+                    }
+                ]
+            }
+        },
+        "/services": {
+            "get": {
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Get all services.",
+                "operationId": "getAllServices",
                 "responses": {
                     "200": {
                         "description": "Success",

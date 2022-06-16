@@ -71,11 +71,18 @@ class User extends Authenticatable
                 'lat'              => 'required|string',
                 'lng'              => 'required|string'
             ],
+            'stylist'        => [
+                'full_name'    => 'required|string',
+                'email'        => ['required', 'email', Rule::unique('users')->whereNull('deleted_at')],
+                'phone'        => 'string',
+                'account_type' => 'integer|required',
+                'experience'   => 'integer|required'
+            ],
             'login'          => [
                 'email'    => 'required|string',
                 'password' => 'required|string',
-//                'device_token' => 'required',
-//                'device_meta'  => 'required',
+                //                'device_token' => 'required',
+                //                'device_meta'  => 'required',
             ],
             'changePassword' => [
                 'old_password'          => 'required',
@@ -118,6 +125,11 @@ class User extends Authenticatable
     public function shopProfile()
     {
         return $this->hasOne(ShopProfile::class, 'shop_id', 'id');
+    }
+
+    public function stylist()
+    {
+        return $this->hasOne(ShopStylist::class, 'stylist_id', 'id')->with('shop');
     }
 
     public function shopRatings()

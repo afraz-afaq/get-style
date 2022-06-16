@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Service;
 use App\Models\ShopOrder;
 use App\Models\ShopProfile;
 use App\Traits\ResponseHandler;
@@ -68,4 +69,30 @@ class ShopServiceController extends Controller
         return $this->responseSuccess($response);
     }
 
+
+    /**
+     * @OA\Get(
+     *
+     *     path="/services",
+     *     tags={"Services"},
+     *     summary="Get all services.",
+     *     operationId="getAllServices",
+     *     @OA\Response(
+     *          response=200,
+     *          description="Success",
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *          ),
+     *      ),
+     *
+     *     security={
+     *          {"user_access_token": {}}
+     *     }
+     * )
+     */
+
+    public function getAllServices()
+    {
+        return $this->responseSuccess(Service::getServices());
+    }
 }

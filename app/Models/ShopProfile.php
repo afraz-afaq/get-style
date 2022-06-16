@@ -51,6 +51,11 @@ class ShopProfile extends Model
         return self::updateOrCreate($data);
     }
 
+    public static function updateShop($shopId,$data){
+        return self::query()->where('shop_id',$shopId)->update($data);
+
+    }
+
     public static function getValidationRules($type, $params = [])
     {
         $rules = [

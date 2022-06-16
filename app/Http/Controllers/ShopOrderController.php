@@ -235,5 +235,41 @@ class ShopOrderController extends Controller
         ShopOrder::updateOrder($orderId, $attributes);
         return $this->responseSuccess();
     }
+
+
+    /**
+     * @OA\Get(
+     *
+     *     path="/shop/{shopId}/order",
+     *     tags={"Orders"},
+     *     summary="Get shop Order history",
+     *     operationId="shopOrderHistory",
+     *
+     *     @OA\Parameter(
+     *     name="shopId",
+     *     in="path",
+     *     required=true,
+     *     @OA\Schema(
+     *       type="integer"
+     *     )
+     *   ),
+     *     @OA\Response(
+     *          response=200,
+     *          description="Success",
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *          ),
+     *      ),
+     *
+     *     security={
+     *          {"user_access_token": {}}
+     *     }
+     * )
+     */
+
+    public function shopOrderHistory($shopId)
+    {
+        return $this->responseSuccess(ShopOrder::getUserOrders($shopId,2));
+    }
 }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Constant;
 use App\Helpers\Helper;
 use App\Models\ShopProfile;
 use App\Models\ShopRating;
@@ -87,18 +88,9 @@ class RatingController extends Controller
             $requestData = $request->all();
             $analyzer = new Analyzer();
 
-            //new words not in the dictionary
-            $newWords = [
-                'rubbish'=> '-1.5',
-                'mediocre' => '-1.0',
-                'agressive' => '-0.5',
-                'professional' => '1.5',
-                'professionalism' => '1.5',
-                'reasonable' => '1.5',
-            ];
+            $model = Constant::DICT;
 
-            //Dynamically update the dictionary with the new words
-            $analyzer->updateLexicon($newWords);
+            $analyzer->updateLexicon($model);
 
 
             $output = $analyzer->getSentiment($requestData['review']);

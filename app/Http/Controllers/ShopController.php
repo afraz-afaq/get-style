@@ -331,7 +331,7 @@ class ShopController extends Controller
             foreach ($requestData['services'] as $service)
             {
                 ShopService::create([
-                    'shop_stylist_id' => $user->id,
+                    'shop_stylist_id' => $shopStylist->id,
                     'service_id'      => $service
                 ]);
             }

@@ -149,6 +149,8 @@ class ShopStylist extends Model
             ->with('services:id,name')
             ->orderBy('avg_rating', 'desc')
             ->where('shop_id', '=', $shopId)
-            ->where('is_available', '=', Constant::TRUE);
+            ->where('is_available', '=', Constant::TRUE)
+            ->get()
+            ->toArray();
     }
 }

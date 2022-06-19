@@ -128,7 +128,7 @@ class RatingController extends Controller
                     'review'          => $requestData['review']
                 ]);
 
-                $shopStylist = ShopStylist::where('id', '=', $requestData['to_be_rated'])->first();
+                $shopStylist = ShopStylist::where('stylist_id', '=', $requestData['to_be_rated'])->first();
                 $count = ShopStylistRating::where('shop_stylist_id', '=', $requestData['to_be_rated'])->count();
                 $shopStylist->total_reviews = $count;
                 $shopStylist->avg_rating = intval(ShopStylistRating::query()->where('shop_stylist_id', '=', $requestData['to_be_rated'])->sum('rating') / $count);

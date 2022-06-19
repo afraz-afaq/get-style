@@ -22,6 +22,7 @@ class Service extends Model
             $servicesId = ShopServicesCharge::query()
                 ->where('shop_id', $shop)
                 ->select('service_id')
+                ->get()
                 ->pluck('service_id')
                 ->toArray();
             dd($servicesId);

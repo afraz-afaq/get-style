@@ -7,6 +7,7 @@ use App\Models\Schedule;
 use App\Models\ScheduleSlot;
 use App\Models\ShopProfile;
 use App\Models\ShopService;
+use App\Models\ShopServicesCharge;
 use App\Models\ShopStylist;
 use App\Models\ShopStylistSchedule;
 use App\Models\User;
@@ -466,5 +467,65 @@ class ShopController extends Controller
     public function getShopSchedules()
     {
         return $this->responseSuccess(Schedule::getShopSchedules(\auth()->user()->id));
+    }
+
+
+    /**
+     * @OA\Post(
+     *
+     *     path="/shop/service",
+     *     tags={"Shop"},
+     *     summary="Add shop Services",
+     *     operationId="addShopServices",
+     *
+     *     @OA\RequestBody(
+     *         description="Add Shop services.",
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="shop_id",
+     *                     description="Shop id",
+     *                     type="integer",
+     *                     example="3"
+     *                 ),
+     *                  @OA\Property(
+     *                     property="services",
+     *                     description="Services that shop will provide.",
+     *                     type="number",
+     *                     example="[[1,101],[2,900]]"
+     *                 ),
+     *              )
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *          response=200,
+     *          description="Success",
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *          ),
+     *      ),
+     *     security={
+     *          {"user_access_token": {}}
+     *     }
+     * )
+     */
+    public function addShopServices(Request $request)
+    {
+        $requestData = $request->all();
+        foreach ($requestData['services'] as $service)
+        {
+            ShopServicesCharge::query()->updateOrCreate(
+                [
+                    'shop_id'    => $requestData['shop_id'],
+                    'service_id' => $service[0]
+                ],
+                [
+                    'charges' => $service[1]
+                ]);
+        }
+        return $this->responseSuccess();
     }
 }

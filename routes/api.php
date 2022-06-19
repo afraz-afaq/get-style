@@ -34,7 +34,7 @@ Route::post('notify', [NotificationController::class, 'notify']);
 // protected routes
 Route::group(['middleware' => ['auth:sanctum']], function ()
 {
-    Route::get('services', [ShopServiceController::class, 'getAllServices']);
+
 
     //General User
     Route::group(['prefix' => 'user'], function ()
@@ -69,8 +69,10 @@ Route::group(['middleware' => ['auth:sanctum']], function ()
         Route::post('/order', [ShopOrderController::class, 'saveOrder']);
         Route::post('/order/status', [ShopOrderController::class, 'updateOrderStatus']);
         Route::post('/order/assignStylist', [ShopOrderController::class, 'assignStylist']);
+        Route::post('/service', [ShopController::class, 'addShopServices']);
         Route::get('{shopId}/order', [ShopOrderController::class, 'shopOrderHistory']);
         Route::get('{shopId}/stylists', [ShopController::class, 'getShopStylists']);
+        Route::get('/services/{shop_id}', [ShopServiceController::class, 'getShopServices']);
     });
 
     Route::post('logout', [AuthController::class, 'logout']);

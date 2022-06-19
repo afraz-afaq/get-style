@@ -660,6 +660,50 @@
                 ]
             }
         },
+        "/shop/service": {
+            "post": {
+                "tags": [
+                    "Shop"
+                ],
+                "summary": "Add shop Services",
+                "operationId": "addShopServices",
+                "requestBody": {
+                    "description": "Add Shop services.",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "shop_id": {
+                                        "description": "Shop id",
+                                        "type": "integer",
+                                        "example": "3"
+                                    },
+                                    "services": {
+                                        "description": "Services that shop will provide.",
+                                        "type": "number",
+                                        "example": "[[1,101],[2,900]]"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "user_access_token": []
+                    }
+                ]
+            }
+        },
         "/user/{userId}/order": {
             "get": {
                 "tags": [
@@ -916,13 +960,23 @@
                 ]
             }
         },
-        "/services": {
+        "/shop/services/{shop_id}": {
             "get": {
                 "tags": [
                     "Services"
                 ],
-                "summary": "Get all services.",
+                "summary": "Get shop services.",
                 "operationId": "getAllServices",
+                "parameters": [
+                    {
+                        "name": "shop_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Success",

@@ -73,10 +73,19 @@ class ShopServiceController extends Controller
     /**
      * @OA\Get(
      *
-     *     path="/services",
+     *     path="/shop/services/{shop_id}",
      *     tags={"Services"},
-     *     summary="Get all services.",
+     *     summary="Get shop services.",
      *     operationId="getAllServices",
+     *
+     *     @OA\Parameter(
+     *     name="shop_id",
+     *     in="path",
+     *     required=true,
+     *     @OA\Schema(
+     *       type="integer"
+     *     )
+     *   ),
      *     @OA\Response(
      *          response=200,
      *          description="Success",
@@ -91,8 +100,8 @@ class ShopServiceController extends Controller
      * )
      */
 
-    public function getAllServices()
+    public function getShopServices($shop_id)
     {
-        return $this->responseSuccess(Service::getServices());
+        return $this->responseSuccess(Service::getServices($shop_id));
     }
 }

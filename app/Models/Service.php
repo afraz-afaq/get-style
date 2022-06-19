@@ -11,9 +11,21 @@ class Service extends Model
 
     protected $guarded = [''];
 
-    public static function getServices()
+    public static function getServices($shop = false)
     {
-        return self::query()->select('id', 'name')->get();
+        if (!$shop)
+        {
+            return self::query()->select('id', 'name')->get();
+        }
+        else
+        {
+            $servicesId = ShopServicesCharge::query()
+                ->where('shop_id', $shop)
+                ->select('service_id')
+                ->pluck('service_id')
+                ->toArray();
+            return self::query()->select('id', 'name')->whereIn('id', $servicesId)->get();
+        }
     }
 
     public function shopStylists()

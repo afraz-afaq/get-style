@@ -103,7 +103,14 @@ class AuthController extends Controller
             unset($requestData['password_confirmation']);
             $requestData['first_time_login'] = Carbon::now();
             $requestData['password'] = bcrypt($requestData['password']);
-            $user = User::createOrUpdateRecord($requestData);
+            $user = User::createOrUpdateRecord([
+                'full_name'        => $requestData['full_name'],
+                'email'            => $requestData['email'],
+                'password'         => $requestData['password'],
+                'phone'            => $requestData['phone'],
+                'first_time_login' => $requestData['first_time_login'],
+                'account_type'     => $requestData['account_type'],
+            ]);
             if ($requestData['account_type'] == Constant::ROLES['SHOP'])
             {
                 $shop = [

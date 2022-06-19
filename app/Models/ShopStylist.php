@@ -143,7 +143,6 @@ class ShopStylist extends Model
 
     public static function getShopStylists($shopId)
     {
-        dd($shopId);
         return self::query()
             ->with('user:id,full_name,profile_image,email,phone')
             ->with('shop:id,full_name,profile_image,email,phone', 'shop.shopProfile')

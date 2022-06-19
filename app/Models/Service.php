@@ -24,6 +24,7 @@ class Service extends Model
                 ->select('service_id')
                 ->pluck('service_id')
                 ->toArray();
+            dd($servicesId);
             return self::query()->select('id', 'name')->whereIn('id', $servicesId)->get();
         }
     }

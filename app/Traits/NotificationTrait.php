@@ -62,18 +62,18 @@ trait NotificationTrait
             $response = Firebase::messaging()->sendMulticast($message, $deviceTokens);
 
 
-            self::logResponse($response, $params);
+//            self::logResponse($response, $params);
 
 
             return $response;
         }
         catch (\Exception $e)
         {
-            return $e->getMessage();
+             $e->getMessage();
         }
         catch (FirebaseException $e)
         {
-            return $e->getMessage();
+            $e->getMessage();
         }
 
     }

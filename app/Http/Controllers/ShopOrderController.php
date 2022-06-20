@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Constant;
+use App\Models\Notification;
 use App\Models\ShopOrder;
 use App\Traits\ResponseHandler;
 use Carbon\Carbon;
@@ -179,7 +180,9 @@ class ShopOrderController extends Controller
         $data = $request->all();
         $orderId = $data['order_id'];
         $attributes = ['status' => $data['status']];
+        $order = ShopOrder::where('id', $data['order_id'])->first();
         ShopOrder::updateOrder($orderId, $attributes);
+        Notification::sendFcmNotification($order->user_id, 1);
         return $this->responseSuccess();
     }
 
@@ -269,7 +272,7 @@ class ShopOrderController extends Controller
 
     public function shopOrderHistory($shopId)
     {
-        return $this->responseSuccess(ShopOrder::getUserOrders($shopId,2));
+        return $this->responseSuccess(ShopOrder::getUserOrders($shopId, 2));
     }
 }
 

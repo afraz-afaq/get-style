@@ -69,11 +69,11 @@ trait NotificationTrait
         }
         catch (\Exception $e)
         {
-             $e->getMessage();
+             return $e->getMessage();
         }
         catch (FirebaseException $e)
         {
-            $e->getMessage();
+            return $e->getMessage();
         }
 
     }
